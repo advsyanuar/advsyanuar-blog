@@ -10,5 +10,6 @@ I don't want to use Elementor since its bloated, overrated and i don't want to a
 - .NET Core (Backend)
 
 ## The Purpose
-As a part of my learning journey from primarily Low Code Developer inside a corporate setting(Finance and Banking) i decided to make my own website to basically showcase my projects and extra 
-blog section to 'ramble' about anything i'm interested in. I guess i'm a part of Indie Web movement then?
+As a part of my learning journey from primarily Low Code Developer inside a corporate setting(Finance and Banking) to a fullcode development, I decided to make my own website rather than following tutorial projects from YouTube. 
+My intention is to showcase my projects and extra blog section to 'ramble' about anything i'm interested in. 
+I guess i'm now also being a part of Indie Web movement then?
