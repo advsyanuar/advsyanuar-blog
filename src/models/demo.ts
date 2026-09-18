@@ -5,7 +5,7 @@ export type Demo = {
   category: string;
   year?: string;
   description?: string;
-  demo_url: string;
-  stacks_used: string[];
-  github_link?: string;
+  demoUrl: string;
+  stacksUsed: string[];
+  githubLink?: string;
 };

@@ -132,6 +132,81 @@ export const STACK_ICONS: StackIcon[] = [
         stack_link: "https://grafana.com/"
     },
     {
+        name: "javascript",
+        icon_link: "https://thesvg.org/icons/javascript/default.svg",
+        stack_link: "https://www.javascript.com/"
+    },
+    {
+        name: "typescript",
+        icon_link: "https://thesvg.org/icons/typescript/default.svg",
+        stack_link: "https://www.typescriptlang.org/"
+    },
+    {
+        name: "html",
+        icon_link: "https://thesvg.org/icons/html/default.svg",
+        stack_link: "https://developer.mozilla.org/en-US/docs/Web/HTML"
+    },
+    {
+        name: "css",
+        icon_link: "https://thesvg.org/icons/css/default.svg",
+        stack_link: "https://developer.mozilla.org/en-US/docs/Web/CSS"
+    },
+    {
+        name: "go",
+        icon_link: "https://thesvg.org/icons/go/default.svg",
+        stack_link: "https://go.dev/"
+    },
+    {
+        name: "python",
+        icon_link: "https://thesvg.org/icons/python/default.svg",
+        stack_link: "https://www.python.org/"
+    },
+    {
+        name: "csharp",
+        icon_link: "https://thesvg.org/icons/csharp/default.svg",
+        stack_link: "https://www.microsoft.com/en-us/net/csharp"
+    },
+    {
+        name: "c#",
+        icon_link: "https://thesvg.org/icons/csharp/default.svg",
+        stack_link: "https://www.microsoft.com/en-us/net/csharp"
+    },
+    {
+        name: ".net",
+        icon_link: "https://thesvg.org/icons/microsoft-dotnet/default.svg",
+        stack_link: "https://dotnet.microsoft.com/en-us/download/dotnet"
+    },
+    {
+        name: "antigravity",
+        icon_link: "https://thesvg.org/icons/google-antigravity/default.svg",
+        stack_link: "https://antigravity.google/"
+    },
+    {
+        name: "opencode",
+        icon_link: "https://thesvg.org/icons/opencode/default.svg",
+        stack_link: "https://opencode.com/"
+    },
+    {
+        name: "vite",
+        icon_link: "https://thesvg.org/icons/vite/default.svg",
+        stack_link: "https://vitejs.dev/"
+    },
+    {
+        name: "rust",
+        icon_link: "https://thesvg.org/icons/rust/default.svg",
+        stack_link: "https://www.rust-lang.org/"
+    },
+    {
+        name: "svelte",
+        icon_link: "https://thesvg.org/icons/svelte/default.svg",
+        stack_link: "https://svelte.dev/"
+    },
+    {
+        name: "sveltekit",
+        icon_link: "https://thesvg.org/icons/svelte/default.svg",
+        stack_link: "https://kit.svelte.dev/"
+    },
+    {
         name: "prometheus",
         icon_link: "https://thesvg.org/icons/prometheus/default.svg",
         stack_link: "https://prometheus.io/"

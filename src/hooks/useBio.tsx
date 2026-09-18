@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Biography } from "../models/biography";
 
-const ENDPOINT = "http://localhost:8085/api/v1/biography/";
+const ENDPOINT = "/biography/";
 
 const useBio = () => {
     const [data, setData] = useState<Biography | null>();
@@ -9,7 +9,7 @@ const useBio = () => {
     useEffect(() => {
         (async() => {
             try {
-                const response = await fetch(ENDPOINT);
+                const response = await fetch(import.meta.env.VITE_API_URL + ENDPOINT);
                 const result = await response.json();
                 setData(result);
             } catch (error) {

@@ -1,12 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { DEMOS } from "../data/demos.data";
-import type { Demo } from "../models/demo";
 import useGetIcon from "../hooks/useGetIcon";
-
-interface DemosProps {
-  items?: Demo[];
-}
+import useDemo from "../hooks/useDemos";
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -26,14 +21,12 @@ const slideVariants = {
   }),
 };
 
-const Demos = ({ items = DEMOS }: DemosProps) => {
+const Demos = () => {
   const [[page, direction], setPage] = useState<[number, number]>([0, 0]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isInteractive, setIsInteractive] = useState<boolean>(false);
   const { getIcon } = useGetIcon();
-
-  const currentIndex = ((page % items.length) + items.length) % items.length;
-  const currentDemo = items[currentIndex];
+  const { demos, loading, error } = useDemo();
 
   const paginate = useCallback(
     (newDirection: number) => {
@@ -55,6 +48,18 @@ const Demos = ({ items = DEMOS }: DemosProps) => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [paginate]);
+  
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+  if (!demos || demos.length === 0) {
+    return <div>No demos found.</div>;
+  }
+  const currentIndex = ((page % demos.length) + demos.length) % demos.length;
+  const currentDemo = demos[currentIndex];
 
   return (
     <div className="relative flex flex-col h-full w-full bg-neutral-950 text-white overflow-hidden select-none">
@@ -88,7 +93,7 @@ const Demos = ({ items = DEMOS }: DemosProps) => {
             className="absolute inset-0 w-full h-full"
           >
             <iframe
-              src={currentDemo.demo_url}
+              src={currentDemo.demoUrl}
               title={currentDemo.title}
               onLoad={() => setIsLoading(false)}
               className="w-full h-full border-0 bg-neutral-950"
@@ -145,9 +150,9 @@ const Demos = ({ items = DEMOS }: DemosProps) => {
             <p className="text-sm text-neutral-300 backdrop-blur-sm bg-neutral-950/60 p-3 hidden sm:block border border-white/10">
               {currentDemo.description}
             </p>
-            {currentDemo.github_link && currentDemo.github_link !== "#" && (
+            {currentDemo.githubLink && currentDemo.githubLink !== "#" && (
               <a
-                href={currentDemo.github_link}
+                href={currentDemo.githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="pointer-events-auto w-fit"
@@ -168,7 +173,7 @@ const Demos = ({ items = DEMOS }: DemosProps) => {
         {/* Stack Badges on bottom right */}
         <div className="absolute bottom-6 right-6 md:bottom-8 md:right-10 z-20 max-w-sm pointer-events-none">
           <div className="flex flex-col flex-wrap gap-2">
-            {currentDemo.stacks_used.map((s) => (
+            {currentDemo.stacksUsed.map((s) => (
               <span
                 key={s}
                 className="inline-flex gap-2 items-center px-3 py-1 text-base font-ibm font-light bg-neutral-800/60 backdrop-blur-md text-slate-100 shadow-sm border border-white/5"
@@ -220,7 +225,7 @@ const Demos = ({ items = DEMOS }: DemosProps) => {
               {String(currentIndex + 1).padStart(2, "0")}
             </span>
             <span className="mx-1 text-neutral-600">/</span>
-            <span>{String(items.length).padStart(2, "0")}</span>
+            <span>{String(demos.length).padStart(2, "0")}</span>
           </div>
 
           {/* Prev / Next Buttons */}

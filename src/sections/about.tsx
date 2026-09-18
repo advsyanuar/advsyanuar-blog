@@ -91,10 +91,10 @@ const ErrorState = ({ message }: { message: string }) => (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full max-w-lg bg-red-950/20 p-6 md:p-8"
+      className="w-full max-w-lg bg-rose-500/40 p-6 md:p-8"
     >
-      <h3 className="font-ibm text-[11px] uppercase tracking-[0.3em] text-neutral-400 mt-3">
-        Uh Oh! Looks like the service is on vacation.
+      <h3 className="font-ibm text-base font-normal text-neutral-400 mt-3">
+        Uh Oh! Looks like the service is on vacation. Try again later!
       </h3>
       <p className="mt-4 font-mono text-sm leading-relaxed text-red-300 wrap-break-word">
         {message}

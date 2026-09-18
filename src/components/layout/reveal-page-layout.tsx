@@ -21,7 +21,7 @@ export default function RevealPageLayout({
 
   return (
     <motion.div
-      className="fixed flex z-50 overflow-hidden bg-slate-50"
+      className="fixed flex z-50 overflow-hidden bg-beige"
       initial={{
         left: fallback.left,
         top: fallback.top,
@@ -47,7 +47,7 @@ export default function RevealPageLayout({
           <button
             type="button"
             onClick={onClose}
-            className="flex flex-col items-center w-full h-20 justify-center bg-neutral-950/75 font-ibm text-white backdrop-blur-md transition-colors duration-300 cursor-pointer hover:bg-neutral-950/90"
+            className="flex flex-col items-center w-full h-20 justify-center bg-ink-black/75 font-ibm text-beige backdrop-blur-md transition-colors duration-300 cursor-pointer hover:bg-ink-black/90"
           >
             <span className="text-7xl font-thin">×</span>
           </button>
@@ -55,12 +55,12 @@ export default function RevealPageLayout({
             type="button"
             hidden={title === "ABOUT"}
             onClick={() => setPanelOpen(!panelOpen)}
-            className="flex flex-col items-center w-full h-20 justify-center font-ibm text-neutral-900 backdrop-blur-md transition-colors duration-300 cursor-pointer hover:bg-neutral-950/90 hover:text-slate-50 border-b border-dashed"
+            className="flex flex-col items-center w-full h-20 justify-center font-ibm text-ink-black backdrop-blur-md transition-colors duration-300 cursor-pointer hover:bg-ink-black/90 hover:text-beige border-b border-dashed"
           >
             <span className="text-3xl font-thin">&#8651;</span>
           </button>
         </div>
-        <h1 className="-rotate-90 origin-center font-normal text-neutral-900 tracking-widest text-7xl">{title}</h1>
+        <h1 className="-rotate-90 origin-center font-normal text-ink-black tracking-widest text-7xl">{title}</h1>
       </div>
 
       <div className="relative z-20 h-full w-full flex">
@@ -74,15 +74,14 @@ export default function RevealPageLayout({
           }}
           exit={{ width: 0 }}
           transition={{ duration: 0.4 }}
-          className="text-slate-900">
+          className="text-ink-black">
             <ul className="p-2 font-ibm font-light">
-              {list.map((l, i) =>
+              {list && list.map((l, i) =>
                 <li key={`${l}-item-${i}`} className="flex flex-col items-start">
                   <div className="text-base flex items-center justify-between w-full">
                     <a>&mdash;&mdash; {l}</a> 
                     <span className="text-xs">[Console]</span> 
                   </div> 
-                  <span className="text-base ">&ndash;</span>
                 </li>
               )}
             </ul>

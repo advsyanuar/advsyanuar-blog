@@ -1,11 +1,14 @@
 export type Project = {
   id: string;
   title: string;
-  stakeholder?: string;
-  category: string;
-  year?: string;
   description?: string;
-  image: string;
+  category: string;
+  dateInitiated: string;
+  datePublished: string;
+  images: string[];
+  videos?: string[];
   link?: string;
-  stacks_used: string[];
+  stackUsed: string[];
+  createdDate: string;
+  modifiedDate?: string | null;
 };

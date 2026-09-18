@@ -3,7 +3,6 @@ export type GalleryItem = {
   title: string;
   numbering: number;
   description?: string;
-  color: string;
   image: string;
   video: string;
 }
