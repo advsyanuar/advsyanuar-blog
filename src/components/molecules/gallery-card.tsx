@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import type { GalleryItem } from "../../models/gallery-item";
-import DotMatrix from "../decoratives/dot-matrix";
 
 export function GalleryCard({
   item,

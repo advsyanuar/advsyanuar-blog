@@ -29,12 +29,11 @@ const tileVariants: Variants = {
 };
 
 interface TileProps extends PropsWithChildren {
-  index: string;
   label: string;
   className?: string;
 }
 
-const Tile = ({ index, label, className = "", children }: TileProps) => (
+const Tile = ({ label, className = "", children }: TileProps) => (
   <motion.section
     variants={tileVariants}
     className={`group relative flex flex-col overflow-hidden border border-white/10 bg-neutral-900/80 p-6 md:p-8 transition-colors duration-300 hover:border-emerald-400/50 ${className}`}
@@ -260,7 +259,7 @@ const BioWall = ({ bio }: BioWallProps) => {
           variants={wallVariants}
           className="grid grid-cols-1 gap-3 p-6 md:grid-cols-2 md:p-8 lg:grid-cols-4 lg:gap-3.5 lg:p-10"
         >
-          <Tile index="00" label="Profile" className="lg:col-span-4">
+          <Tile label="Profile" className="lg:col-span-4">
             <div className="flex h-full flex-col justify-between gap-8 md:flex-row md:items-end">
               <div>
                 <p className="font-mono text-xs tracking-widest text-neutral-500 uppercase">
@@ -277,7 +276,7 @@ const BioWall = ({ bio }: BioWallProps) => {
             </div>
           </Tile>
 
-          <Tile index="01" label="Personal" className="lg:col-span-2">
+          <Tile label="Personal" className="lg:col-span-2">
             <div className="flex h-full flex-col justify-between gap-6">
               <div className="space-y-5">
                 <InfoRow label="Birth" value={bio.dateOfBitrh} />
@@ -299,7 +298,7 @@ const BioWall = ({ bio }: BioWallProps) => {
             </div>
           </Tile>
 
-          <Tile index="02" label="Skills" className="lg:col-span-2">
+          <Tile label="Skills" className="lg:col-span-2">
             <div className="flex h-full flex-col justify-between gap-6">
               {bio.skills.map((group) => (
                 <div key={group.category}>
@@ -316,7 +315,7 @@ const BioWall = ({ bio }: BioWallProps) => {
             </div>
           </Tile>
 
-          <Tile index="03" label="Experience" className="lg:col-span-4">
+          <Tile label="Experience" className="lg:col-span-4">
             <div className="flex h-full flex-col">
               {bio.experiences.map((exp, i) => (
                 <ExperienceBlock
@@ -328,7 +327,7 @@ const BioWall = ({ bio }: BioWallProps) => {
             </div>
           </Tile>
 
-          <Tile index="04" label="Education" className="lg:col-span-2">
+          <Tile label="Education" className="lg:col-span-2">
             <div className="space-y-4">
               {bio.educations.map((edu) => (
                 <EducationBlock
@@ -339,7 +338,7 @@ const BioWall = ({ bio }: BioWallProps) => {
             </div>
           </Tile>
 
-          <Tile index="05" label="Certifications" className="lg:col-span-2">
+          <Tile label="Certifications" className="lg:col-span-2">
             <div className="space-y-4">
               {bio.certifications.map((cert) => (
                 <CertificationBlock
@@ -351,7 +350,7 @@ const BioWall = ({ bio }: BioWallProps) => {
           </Tile>
 
           {hasProjects && (
-            <Tile index="06" label="Projects" className="lg:col-span-2">
+            <Tile label="Projects" className="lg:col-span-2">
               <div className="space-y-4">
                 {bio.projects!.map((p) => (
                   <ProjectBlock key={`${p.name}-${p.yearRange}`} item={p} />
@@ -361,7 +360,7 @@ const BioWall = ({ bio }: BioWallProps) => {
           )}
 
           {hasAwards && (
-            <Tile index="07" label="Awards" className={siblingSpan}>
+            <Tile label="Awards" className={siblingSpan}>
               <div className="space-y-3">
                 {bio.awards!.map((a) => (
                   <AwardBlock key={`${a.name}-${a.year}`} item={a} />
@@ -371,7 +370,7 @@ const BioWall = ({ bio }: BioWallProps) => {
           )}
 
           {hasPublications && (
-            <Tile index="08" label="Publications" className={siblingSpan}>
+            <Tile label="Publications" className={siblingSpan}>
               <div className="space-y-3">
                 {bio.publications!.map((p) => (
                   <PublicationBlock key={`${p.title}-${p.year}`} item={p} />

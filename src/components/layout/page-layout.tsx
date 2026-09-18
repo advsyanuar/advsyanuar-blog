@@ -1,5 +1,4 @@
 import type { PropsWithChildren } from "react";
-import CrtBackground from "./crt-background";
 
 export default function PageLayout({ children }: PropsWithChildren) {
   return (

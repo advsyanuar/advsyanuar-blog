@@ -19,7 +19,7 @@ export default function ScrollHorizontal() {
     item: GalleryItem;
     origin: DOMRect;
   } | null>(null);
-  const [list, setList] = useState<string[] | null>(null);
+  const [list, setList] = useState<string[] | []>([]);
   const { getIcon } = useGetIcon();
 
   const { projects } = useProjects();
@@ -64,15 +64,15 @@ export default function ScrollHorizontal() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
   return (
-    <div className="relative flex flex-col h-screen xl:h-[calc(100vh-7rem)] sm:h-[calc(100vh-3rem)] overflow-hidden m-0 sm:m-6 xl:m-14 bg-beige">
+    <div className="relative flex flex-col h-screen xl:h-[calc(100vh-7rem)] overflow-hidden m-0 xl:m-14 bg-beige">
       <div className="h-12 flex items-center">
         <div className="flex-1 flex items-center">
           <span className="h-12 px-2 bg-ash-grey flex flex-col justify-center border-r border-ash-grey border-dashed">
-            <div dangerouslySetInnerHTML={{ __html: siteSettings.siteLogo }} />
+            {siteSettings && <div dangerouslySetInnerHTML={{ __html: siteSettings.siteLogo }} />}
           </span>
           <span className="h-12 px-4 flex flex-col justify-center">
             <TextType 
-              text={siteSettings.typedTexts}
+              text={siteSettings ? siteSettings.typedTexts : []}
               typingSpeed={75}
               pauseDuration={2000}
               showCursor
@@ -129,7 +129,7 @@ export default function ScrollHorizontal() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 items-start w-full h-full flex-1">
-        {siteSettings.galleryItems.map((item) => {
+        {siteSettings && siteSettings.galleryItems.map((item) => {
           if (item.id === "Ar") {
             return (
               <GalleryCard
@@ -153,7 +153,7 @@ export default function ScrollHorizontal() {
 
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center text-ink-black h-12 ">
-          {siteSettings.socialLinks.map((social) => {
+          {siteSettings && siteSettings.socialLinks.map((social) => {
             const icon = getIcon(social.name);
             return (
               <a
@@ -185,7 +185,7 @@ export default function ScrollHorizontal() {
         
         <div className="flex items-center text-ink-black h-12">
           <h2 className="font-ibm text-base uppercase cursor-default mr-3">Made with</h2>
-          {siteSettings.madeWith.map((made) => {
+          {siteSettings && siteSettings.madeWith.map((made) => {
             const icon = getIcon(made);
             const Tag = icon?.stack_link ? "a" : "div";
             return (

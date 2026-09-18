@@ -1,3 +1,5 @@
+import type { GalleryItem } from "./gallery-item";
+
 export type SiteSetting = {
     siteLogo: string;
     typedTexts: string[];
@@ -14,15 +16,6 @@ type SocialLink = {
   name: string;
   label: string;
   url: string;
-};
-
-type GalleryItem = {
-  id: string;
-  title: string;
-  numbering: number;
-  description: string;
-  image: string | null;
-  video: string;
 };
 
 /*
