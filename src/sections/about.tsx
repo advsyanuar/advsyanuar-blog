@@ -10,7 +10,6 @@ import type {
   BiographyProject,
   BiographyPublication,
 } from "../models/biography";
-import useQuote from "../hooks/useQuotes";
 
 const wallVariants: Variants = {
   hidden: {},
@@ -36,15 +35,14 @@ interface TileProps extends PropsWithChildren {
 const Tile = ({ label, className = "", children }: TileProps) => (
   <motion.section
     variants={tileVariants}
-    className={`group relative flex flex-col overflow-hidden border border-white/10 bg-neutral-900/80 p-6 md:p-8 transition-colors duration-300 hover:border-emerald-400/50 ${className}`}
+    className={`group relative flex flex-col overflow-hidden border border-white/10 bg-dark-teal/20 ${className}`}
   >
-    <span className="absolute top-0 left-0 h-1 w-2/3 bg-cyan-500 transition-all duration-500 group-hover:w-full" />
-    <header className="mb-5 flex items-center gap-3">
-      <h3 className="font-ibm text-lg uppercase tracking-[0.3em] font-semibold text-neutral-400">
+    <header className="mb-2 flex items-center gap-3 border-b border-ink-black bg-ash-grey px-4 py-2">
+      <h3 className="font-ibm text-lg uppercase tracking-[0.3em] font-semibold text-ink-black">
         {label}
       </h3>
     </header>
-    <div className="flex-1">{children}</div>
+    <div className="flex-1 p-4">{children}</div>
   </motion.section>
 );
 
@@ -249,15 +247,14 @@ const BioWall = ({ bio }: BioWallProps) => {
   const hasPublications = Boolean(bio.publications?.length);
   const siblingSpan = hasProjects ? "lg:col-span-1" : "lg:col-span-2";
 
-  const { quote } = useQuote();
   return (
-    <div className="relative flex h-full w-full flex-col overflow-hidden bg-neutral-950 text-white select-none">
+    <div className="relative flex h-full w-full flex-col overflow-hidden bg-ink-black text-beige select-none">
       <div className="flex-1 overflow-y-auto">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={wallVariants}
-          className="grid grid-cols-1 gap-3 p-6 md:grid-cols-2 md:p-8 lg:grid-cols-4 lg:gap-3.5 lg:p-10"
+          className="grid grid-cols-1 gap-3 md:grid-cols-2 md:p-6 lg:grid-cols-4 lg:gap-3.5"
         >
           <Tile label="Profile" className="lg:col-span-4">
             <div className="flex h-full flex-col justify-between gap-8 md:flex-row md:items-end">
@@ -382,14 +379,6 @@ const BioWall = ({ bio }: BioWallProps) => {
       </div>
 
       <footer className="basis-1/12 flex-none flex items-center justify-between gap-4 border-t border-white/10 bg-neutral-900/90 px-6 py-4 backdrop-blur-md md:px-10">
-        <div className="min-w-0 flex items-center gap-1">
-          <p className="truncate text-sm font-extrabold tracking-tight text-white sm:text-base">
-            {quote ? quote.text : "-"}
-          </p>
-          <p className="truncate text-sm font-extrabold tracking-tight text-white sm:text-base">
-            {quote ? quote.author : "-"}
-          </p>
-        </div>
         <div className="flex-none font-mono text-[11px] tracking-widest text-neutral-400">
           CURRENTLY PLAYED TRACK ON SPOTIFY (WILL BE) DISPLAYED HERE
         </div>

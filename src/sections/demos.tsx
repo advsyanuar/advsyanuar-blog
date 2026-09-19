@@ -108,7 +108,7 @@ const Demos = () => {
         )}
 
         {/* Interact / Lock Toggle Button */}
-        <div className="absolute bottom-6 right-80 md:bottom-8 md:right-60 z-20">
+        <div className="absolute bottom-6 right-58 md:bottom-8 md:right-60 z-20">
           <button
             type="button"
             onClick={() => setIsInteractive((prev) => !prev)}
@@ -125,19 +125,6 @@ const Demos = () => {
               </>
             ) : (
               <>
-                <svg
-                  className="w-4 h-4 text-emerald-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
-                  />
-                </svg>
                 ENABLE INTERACTION
               </>
             )}
@@ -220,7 +207,7 @@ const Demos = () => {
         {/* Navigation Buttons & Counter on the Right */}
         <div className="flex items-center gap-4 sm:gap-6 flex-none">
           {/* Index Counter */}
-          <div className="font-mono text-sm sm:text-base tracking-widest text-neutral-400">
+          <div className="font-mono hidden sm:flex text-sm sm:text-base tracking-widest text-neutral-400">
             <span className="text-white font-bold">
               {String(currentIndex + 1).padStart(2, "0")}
             </span>

@@ -94,15 +94,17 @@ export default function RevealPageLayout({
 
       <div className="relative z-20 h-full w-full flex flex-col sm:flex-row flex-1 overflow-auto">
         <motion.div 
-          initial={{ width: 0 }}
+          initial={{ width: 0, height: 0 }}
           animate={{
             width: panelOpen ? (typeof window !== "undefined" && window.innerWidth < 640 ? "100%" : "25%") : "0%",
             opacity: panelOpen ? 1 : 0,
+            height: panelOpen ? (typeof window !== "undefined" && window.innerWidth < 640 ? "10%" : "0") : "0%",
             pointerEvents: panelOpen ? "auto" : "none",
             visibility: panelOpen ? "visible" : "hidden"
           }}
           exit={{ width: 0 }}
           transition={{ duration: 0.4 }}
+          hidden={title === "ABOUT"}
           className="text-ink-black shrink-0 bg-beige z-30">
             <ul className="p-2 font-ibm font-light">
               {list && list.map((l, i) =>
