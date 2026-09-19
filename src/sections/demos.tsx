@@ -108,14 +108,14 @@ const Demos = () => {
         )}
 
         {/* Interact / Lock Toggle Button */}
-        <div className="absolute top-6 right-6 md:top-8 md:right-10 z-20">
+        <div className="absolute bottom-6 right-80 md:bottom-8 md:right-60 z-20">
           <button
             type="button"
             onClick={() => setIsInteractive((prev) => !prev)}
-            className={`inline-flex items-center gap-2 px-4 py-2 text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer backdrop-blur-md border border-white/20 active:scale-95 ${
+            className={`inline-flex items-center gap-2 px-4 py-2 text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer backdrop-blur-md active:scale-95 ${
               isInteractive
-                ? "bg-emerald-500/90 text-neutral-950 font-bold shadow-lg shadow-emerald-500/20"
-                : "bg-neutral-900/80 text-white hover:bg-neutral-800/90"
+                ? "bg-ash-grey text-ink-black font-bold shadow-lg border-cyan-200"
+                : "bg-ash-grey text-ink-black hover:bg-ash-grey/80"
             }`}
           >
             {isInteractive ? (
@@ -146,8 +146,8 @@ const Demos = () => {
 
         {/* Description & Link overlay on iframe */}
         {currentDemo.description && (
-          <div className="absolute top-6 left-6 md:top-8 md:left-10 z-20 flex flex-col gap-3 max-w-sm pointer-events-none">
-            <p className="text-sm text-neutral-300 backdrop-blur-sm bg-neutral-950/60 p-3 hidden sm:block border border-white/10">
+          <div className="absolute bottom-6 left-6 md:bottom-8 md:left-10 z-20 flex flex-col gap-3 max-w-sm pointer-events-none">
+            <p className="text-sm text-ink-blank backdrop-blur-sm bg-ash-grey/80 p-3 hidden sm:block">
               {currentDemo.description}
             </p>
             {currentDemo.githubLink && currentDemo.githubLink !== "#" && (
@@ -157,7 +157,7 @@ const Demos = () => {
                 rel="noopener noreferrer"
                 className="pointer-events-auto w-fit"
               >
-                <span className="inline-flex gap-2 items-center px-3 py-1 text-xs font-mono tracking-wider text-emerald-400 bg-neutral-900/80 backdrop-blur-md border border-white/10 hover:bg-neutral-800 transition-colors">
+                <span className="inline-flex gap-2 items-center px-3 py-1 text-xs font-mono tracking-wider text-emerald-400 bg-ink-black/80 backdrop-blur-md">
                   <img
                     src={getIcon("github")?.icon_link || ""}
                     alt="github"

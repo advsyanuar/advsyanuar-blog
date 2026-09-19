@@ -1,4 +1,4 @@
-import { lazy, useEffect, useState, type ReactNode } from "react";
+import { lazy, useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence } from "motion/react";
 import RevealPageLayout from "../layout/reveal-page-layout";
 import type { GalleryItem } from "../../models/gallery-item";
@@ -8,17 +8,20 @@ import TextType from "../decoratives/text-type";
 import useProjects from "../../hooks/useProjects";
 import useDemo from "../../hooks/useDemos";
 import useSiteSettings from "../../hooks/useSiteSettings";
+import Loading from "../../sections/loading";
 
 // Lazy loaded section components
 const Projects = lazy(() => import("../../sections/projects"));
 const Demos = lazy(() => import("../../sections/demos"));
 const About = lazy(() => import("../../sections/about"));
+const NotImplemented = lazy(() => import("../../sections/not-implemented"));
 
 export default function ScrollHorizontal() {
   const [openCard, setOpenCard] = useState<{
     item: GalleryItem;
     origin: DOMRect;
   } | null>(null);
+  const [consoleOrigin, setConsoleOrigin] = useState<DOMRect | null>(null);
   const [list, setList] = useState<string[] | []>([]);
   const { getIcon } = useGetIcon();
 
@@ -44,6 +47,21 @@ export default function ScrollHorizontal() {
     }
   };
 
+  const [isMadeWithOpen, setIsMadeWithOpen] = useState(false);
+  const dropupRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropupRef.current && !dropupRef.current.contains(event.target as Node)) {
+        setIsMadeWithOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   useEffect(() => {
     if(!openCard) return;
 
@@ -61,10 +79,10 @@ export default function ScrollHorizontal() {
     }
   }, [openCard])
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
   if (error) return <div>Error</div>;
   return (
-    <div className="relative flex flex-col h-screen xl:h-[calc(100vh-7rem)] overflow-hidden m-0 xl:m-14 bg-beige">
+    <div className="relative flex flex-col h-full xl:h-[calc(100vh-7rem)] overflow-hidden m-0 xl:m-14 bg-beige">
       <div className="h-12 flex items-center">
         <div className="flex-1 flex items-center">
           <span className="h-12 px-2 bg-ash-grey flex flex-col justify-center border-r border-ash-grey border-dashed">
@@ -83,10 +101,14 @@ export default function ScrollHorizontal() {
             />
           </span>
         </div>
-        <div className="basis-1/7 flex justify-end items-center">
+        <div className="basis-1/7 flex justify-end items-center shrink-0">
           <button
             type="button"
-            aria-label="Email"
+            aria-label="Console"
+            onClick={(e) => {
+              setOpenCard(null);
+              setConsoleOrigin(e.currentTarget.getBoundingClientRect());
+            }}
             className="group h-12 flex items-center border-x border-ash-grey border-dashed bg-beige/10 px-3 md:px-4 py-2 font-ibm text-xs tracking-widest text-ink-black uppercase cursor-pointer transition-colors duration-300 hover:border-ink-black/10 hover:border-dashed hover:bg-ink-black/10"
           >
             <svg
@@ -98,31 +120,11 @@ export default function ScrollHorizontal() {
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              <rect x="2" y="4" width="20" height="16" rx="2" />
-              <path d="m22 6-10 7L2 6" />
+              <polyline points="4 17 10 11 4 5" />
+              <line x1="12" y1="19" x2="20" y2="19" />
             </svg>
-            <span className="max-w-0 font-semibold overflow-hidden whitespace-nowrap opacity-0 group-hover:max-w-32 group-hover:ml-2 group-hover:opacity-100 transition-all duration-300">
-              Email
-            </span>
-          </button>
-          <button
-            type="button"
-            aria-label="Phone"
-            className="group flex h-12 items-center border-x border-slate-400/40 bg-white/10 px-3 md:px-4 py-2 font-ibm text-xs tracking-widest text-slate-900 uppercase cursor-pointer transition-colors duration-300 hover:border-slate-950/10 hover:border-dashed hover:bg-slate-950/10"
-          >
-            <svg
-              className="h-5 w-5 shrink-0"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-            </svg>
-            <span className="max-w-0 font-semibold overflow-hidden whitespace-nowrap opacity-0 group-hover:max-w-32 group-hover:ml-2 group-hover:opacity-100 transition-all duration-300">
-              Phone
+            <span className="font-semibold whitespace-nowrap sm:max-w-0 sm:ml-0 sm:overflow-hidden sm:opacity-0 sm:group-hover:max-w-32 sm:group-hover:ml-2 sm:group-hover:opacity-100 transition-all duration-300">
+             Console 
             </span>
           </button>
         </div>
@@ -136,7 +138,7 @@ export default function ScrollHorizontal() {
                 key={item.id}
                 item={item}
                 clickable={true}
-                onClick={() => window.open("http://advsyanuar.cloud", "__blank")}
+                onClick={() => window.open("http://blog.advsyanuar.cloud", "__blank")}
               />
             );
           }
@@ -145,7 +147,10 @@ export default function ScrollHorizontal() {
               key={item.id}
               item={item}
               clickable={true}
-              onClick={(origin) => setOpenCard({ item, origin })}
+              onClick={(origin) => {
+                setConsoleOrigin(null);
+                setOpenCard({ item, origin });
+              }}
             />
           );
         })}
@@ -183,39 +188,108 @@ export default function ScrollHorizontal() {
           })}
         </div>
         
-        <div className="flex items-center text-ink-black h-12">
-          <h2 className="font-ibm text-base uppercase cursor-default mr-3">Made with</h2>
-          {siteSettings && siteSettings.madeWith.map((made) => {
-            const icon = getIcon(made);
-            const Tag = icon?.stack_link ? "a" : "div";
-            return (
-              <Tag
-                key={made}
-                {...(icon?.stack_link
-                  ? { href: icon.stack_link, target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                aria-label={made}
-                className="relative group h-12 w-12 flex items-center justify-center border-l border-ash-grey border-dashed bg-beige/10 font-ibm text-xs text-ink-black uppercase cursor-pointer transition-colors duration-200 hover:bg-ash-grey/10"
+        <div ref={dropupRef} className="relative flex items-center text-ink-black h-12">
+          {/* Mobile Dropup Toggle & Menu */}
+          <div className="sm:hidden flex items-center h-12">
+            <button
+              type="button"
+              onClick={() => setIsMadeWithOpen((prev) => !prev)}
+              aria-label="Made with tech stack"
+              aria-expanded={isMadeWithOpen}
+              className="h-12 px-3 flex items-center gap-2 border-l border-ash-grey border-dashed bg-beige/10 font-ibm text-xs tracking-widest text-ink-black uppercase cursor-pointer transition-colors duration-200 hover:bg-ash-grey/10"
+            >
+              <span className="font-semibold">Made with</span>
+              <svg
+                className={`h-4 w-4 transition-transform duration-200 ${
+                  isMadeWithOpen ? "rotate-180" : ""
+                }`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                {icon?.icon_link ? (
-                  <img
-                    src={icon.icon_link}
-                    alt={made}
-                    className="h-5 w-5 shrink-0 object-contain transition-transform duration-200 group-hover:scale-110"
-                  />
-                ) : (
-                  <span className="h-5 w-5 shrink-0 flex items-center justify-center font-bold text-xs">
-                    {made.charAt(0)}
-                  </span>
-                )}
+                <polyline points="18 15 12 9 6 15" />
+              </svg>
+            </button>
 
-                {/* Popover / Tooltip revealing stack name */}
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-30 whitespace-nowrap bg-slate-950 text-slate-100 text-[11px] font-ibm tracking-wider uppercase px-2.5 py-1 rounded shadow-lg border border-slate-800 flex items-center gap-1.5 after:content-[''] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-4 after:border-transparent after:border-t-slate-950">
-                  <span>{made}</span>
+            {/* Dropup Panel (Mobile) */}
+            {isMadeWithOpen && (
+              <div className="absolute bottom-full right-0 mb-2 w-52 bg-ash-grey text-ink-black shadow-xl py-2 z-40">
+                <div className="px-3 py-1.5 border-b border-ink-black/40 text-[10px] font-ibm tracking-widest text-ink-black uppercase">
+                  Made with
                 </div>
-              </Tag>
-            );
-          })}
+                <div className="max-h-60 overflow-y-auto py-1">
+                  {siteSettings &&
+                    siteSettings.madeWith.map((made) => {
+                      const icon = getIcon(made);
+                      const Tag = icon?.stack_link ? "a" : "div";
+                      return (
+                        <Tag
+                          key={made}
+                          {...(icon?.stack_link
+                            ? { href: icon.stack_link, target: "_blank", rel: "noopener noreferrer" }
+                            : {})}
+                          onClick={() => setIsMadeWithOpen(false)}
+                          className="flex items-center gap-3 px-3 py-2 text-xs font-ibm uppercase transition-colors duration-150 hover:bg-ink-black/40 cursor-pointer"
+                        >
+                          {icon?.icon_link ? (
+                            <img
+                              src={icon.icon_link}
+                              alt={made}
+                              className="h-5 w-5 shrink-0 object-contain"
+                            />
+                          ) : (
+                            <span className="h-5 w-5 shrink-0 flex items-center justify-center font-bold text-xs bg-ash-grey">
+                              {made.charAt(0)}
+                            </span>
+                          )}
+                          <span className="truncate">{made}</span>
+                        </Tag>
+                      );
+                    })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Inline Display */}
+          <div className="hidden sm:flex items-center h-12">
+            <h2 className="font-ibm text-base uppercase cursor-default mr-3">Made with</h2>
+            {siteSettings &&
+              siteSettings.madeWith.map((made) => {
+                const icon = getIcon(made);
+                const Tag = icon?.stack_link ? "a" : "div";
+                return (
+                  <Tag
+                    key={made}
+                    {...(icon?.stack_link
+                      ? { href: icon.stack_link, target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    aria-label={made}
+                    className="relative group h-12 w-12 flex items-center justify-center border-l border-ash-grey border-dashed bg-beige/10 font-ibm text-xs text-ink-black uppercase cursor-pointer transition-colors duration-200 hover:bg-ash-grey/10"
+                  >
+                    {icon?.icon_link ? (
+                      <img
+                        src={icon.icon_link}
+                        alt={made}
+                        className="h-5 w-5 shrink-0 object-contain transition-transform duration-200 group-hover:scale-110"
+                      />
+                    ) : (
+                      <span className="h-5 w-5 shrink-0 flex items-center justify-center font-bold text-xs">
+                        {made.charAt(0)}
+                      </span>
+                    )}
+
+                    {/* Popover / Tooltip revealing stack name */}
+                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:-translate-y-1 transition-all duration-200 z-60 whitespace-nowrap bg-slate-950 text-slate-100 text-[11px] font-ibm tracking-wider uppercase px-2.5 py-1 rounded shadow-lg border border-slate-800 flex items-center gap-1.5 after:content-[''] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-4 after:border-transparent after:border-t-slate-950">
+                      <span>{made}</span>
+                    </div>
+                  </Tag>
+                );
+              })}
+          </div>
         </div>
       </div>
 
@@ -229,6 +303,24 @@ export default function ScrollHorizontal() {
             onClose={() => setOpenCard(null)}
           >
             {conditionalRendering()}
+          </RevealPageLayout>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {consoleOrigin && (
+          <RevealPageLayout
+            key="console"
+            title="CONSOLE"
+            origin={consoleOrigin}
+            list={[]}
+            onClose={() => setConsoleOrigin(null)}
+          >
+            <NotImplemented
+              title="Console"
+              message="Whoops! This feature isn't wired up yet. COME BACK HERE LATER! But here you can 'talk' with the AI embedded in the console. Pretty cool huh?"
+              features={[]}
+            />
           </RevealPageLayout>
         )}
       </AnimatePresence>
